@@ -99,9 +99,11 @@ UNAME_S           := $(shell uname -s)
 ifeq ($(UNAME_S),AIX)
     TAR_CMD     := gtar
     GNUMAKE_CMD := gmake
+    GNUCFLAGS   := "-g -O0 -maix64"
 else
     TAR_CMD     := tar
     GNUMAKE_CMD := make
+    GNUCFLAGS   := "-g -O0"
 endif
 
 .PHONY:
@@ -149,7 +151,7 @@ Build_pstree_yes:
         $(TAR_CMD) xzf psmisc-22.21.tar.gz;                                       \
         cd psmisc-22.21;                                                  \
         ./configure --prefix=$(prefix)/psmisc;                            \
-        $(GNUMAKE_CMD) CFLAGS="-g -O0";                                             \
+        $(GNUMAKE_CMD) CFLAGS=$(GNUCFLAGS);                                             \
         $(GNUMAKE_CMD) DESTDIR=$(DESTDIR) install;                                  \
         ln -s $(prefix)/psmisc/bin/pstree $(DESTDIR)$(prefix)/libexec;    \
 	cd ..; rm -rf psmisc-22.21
