@@ -150,7 +150,7 @@ Build_pstree_yes:
 	cd contrib;                                                       \
         $(TAR_CMD) xzf psmisc-22.21.tar.gz;                                       \
         cd psmisc-22.21;                                                  \
-        ./configure --prefix=$(prefix)/psmisc;                            \
+        ./configure --prefix=$(prefix)/psmisc CFLAGS=$(GNUCFLAGS);                            \
         $(GNUMAKE_CMD) CFLAGS=$(GNUCFLAGS);                                             \
         $(GNUMAKE_CMD) DESTDIR=$(DESTDIR) install;                                  \
         ln -s $(prefix)/psmisc/bin/pstree $(DESTDIR)$(prefix)/libexec;    \
