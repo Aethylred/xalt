@@ -93,6 +93,15 @@ TACC_PKG          := contrib/TACC/monthly_report.in    contrib/TACC/pytas.py    
                      contrib/TACC/envReport.in
 TACC_PKG          := $(patsubst %, $(PATH_TO_SRC)/%, $(TACC_PKG))
 
+
+UNAME_S           := $(shell uname -s)
+
+ifeq ($(UNAME_S),AIX)
+    TAR_CMD := gtar
+else
+    TAR_CMD := tar
+endif
+
 .PHONY:
 
 all:
@@ -135,7 +144,7 @@ Build_pstree_no:
 
 Build_pstree_yes:
 	cd contrib;                                                       \
-        tar xf psmisc-22.21.tar.gz;                                       \
+        $(TAR_CMD) xf psmisc-22.21.tar.gz;                                       \
         cd psmisc-22.21;                                                  \
         ./configure --prefix=$(prefix)/psmisc;                            \
         make CFLAGS="-g -O0";                                             \
